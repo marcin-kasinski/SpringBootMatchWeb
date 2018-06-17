@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Matches</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      
+      
+<style>
+#records {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    #width: 100%;
+}
+
+#records td, #records th {
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+#records tr:nth-child(even){background-color: #f2f2f2;}
+
+#records tr:hover {background-color: #ddd;}
+
+#records th {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+</style>      
+</head>
+
+<script>
+
+var myMap = new Map();
+
+myMap.set("key1", "val1");
+myMap.set("key2", "val2");
+
+
+var points = {};
+function addpoints(key, value) 
+{
+	var current_value=points[key];
+	
+	if (current_value === undefined) {
+		current_value=value;
+	}
+	else current_value=current_value+value;
+	
+	points[key]=current_value;
+	
+//	alert('current_value '+current_value);
+	
+}
+
+
+</script>
+
+
+<body>
+	<h1>SpringBootMatch: Mecze</h1>
+
+<table id="records">
+<tr><th>Godzna meczu</th><th colspan=3>Kto gra</th><th>Wynik</th><th colspan=2>Jak obstawiamy</th></tr>
+
+<tr th:each="match : ${matches}">
+	<td th:text="${match.play_time}"></td>
+	<td><img th:src="${match.flag1 != null} ? ${match.flag1.url}" width=42 height=28 /></td>
+	<td th:text="${match.country1} +' - '+ ${match.country2}"></td>
+	<td><img th:src="${match.flag2 != null} ? ${match.flag2.url}" width=42 height=28 /></td>
+	
+	<td th:switch="${match.closed}">
+    <span th:case="true" th:text="${match.score1} +' - '+ ${match.score2}" /> 
+    <span th:case="false" th:text="'? - ?'" />
+</td>
+	
+	
+	<td th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match.play_time) == true    &&   T(mk.tools.Util).isMatchVoted(match, user) == false  }"> <form action="/vote" method="post">
+		
+		<input type = hidden name="match_id" th:value="${match.id}">
+
+   		<select name="score1">
+  		<option value="0">0</option>
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+  		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+		</select> 
+
+   		<select name="score2">
+  		<option value="0">0</option>
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+  		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+		</select> 
+
+
+        <input type="submit" value="Obstaw" />
+    </form></td>
+    
+    <td th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match.play_time) == false ||   T(mk.tools.Util).isMatchVoted(match, user) == true   }"> </td>
+    <td>
+    
+    
+    <table>
+      <tr>
+      <td th:each="type : ${match.types}">
+      
+     <script th:inline="javascript">
+/*<![CDATA[*/
+
+    var email = [[${type.user.email}]];
+    var points = [[${T(mk.tools.Util).getPoints(match,type)}]];
+
+    
+//    alert (email+ ' / '+points);
+    
+    addpoints(email, points) ;
+//    addpoints("Marcin", points) ;
+
+
+/*]]>*/
+</script>
+      
+         <span th:text="${type.user.name} + ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+         <span th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+      <td>
+      </tr>
+    </table>
+    </td>
+    
+    
+</tr>
+</table>
+
+  
+<script>
+
+//alert('start');
+
+for (const entry of myMap.entries()) {
+//	  alert(entry.value);
+	}
+
+//alert('end');
+
+</script>
+  
+<BR>    
+    
+Ranking:    <BR><BR>    
+    
+<table id="records">
+<tr th:each="point : ${points}">
+	<td th:text="${point.key}">keyvalue</td>
+    <td th:text="${point.value}">num</td>	
+
+</tr>    
+</table>
+    
+    
+    
+    
+
+    
+</body>
+</html>
