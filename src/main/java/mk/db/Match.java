@@ -35,11 +35,11 @@ public class Match {
 	@Column(name = "play_time")
 	private String play_time;
 
-	@Column(name = "country1")
-	private String country1;
+	@Column(name = "team1")
+	private String team1;
 
-	@Column(name = "country2")
-	private String country2;
+	@Column(name = "team2")
+	private String team2;
 
 	@Column(name = "score1")
 	private Byte score1;
@@ -75,9 +75,9 @@ public class Match {
 
 	
 	
-//	@OneToOne( fetch = FetchType.EAGER, mappedBy="country")
+//	@OneToOne( fetch = FetchType.EAGER, mappedBy="team")
 	@OneToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name = "country1", referencedColumnName="country" , nullable = false,insertable= false,  updatable=false)
+    @JoinColumn(name = "team1", referencedColumnName="team" , nullable = false,insertable= false,  updatable=false)
     private Flag flag1;
 
 public Flag getFlag1() {
@@ -96,9 +96,9 @@ public Flag getFlag1() {
 		this.flag2 = flag2;
 	}
 
-	//	@OneToOne( fetch = FetchType.EAGER, mappedBy="country")
+	//	@OneToOne( fetch = FetchType.EAGER, mappedBy="team")
 	@OneToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name = "country2", referencedColumnName="country", nullable = false,insertable= false,  updatable=false)
+    @JoinColumn(name = "team2", referencedColumnName="team", nullable = false,insertable= false,  updatable=false)
     private Flag flag2;
 
 	
@@ -111,28 +111,28 @@ public Flag getFlag1() {
 		this.id = id;
 	}
 
-	public String getCountry1() {
-		return country1;
-	}
-
 	public String getPlay_time() {
 		return play_time;
 	}
 
+	public String getTeam1() {
+		return team1;
+	}
+
+	public void setTeam1(String team1) {
+		this.team1 = team1;
+	}
+
+	public String getTeam2() {
+		return team2;
+	}
+
+	public void setTeam2(String team2) {
+		this.team2 = team2;
+	}
+
 	public void setPlay_time(String play_time) {
 		this.play_time = play_time;
-	}
-
-	public void setCountry1(String country1) {
-		this.country1 = country1;
-	}
-
-	public String getCountry2() {
-		return country2;
-	}
-
-	public void setCountry2(String country2) {
-		this.country2 = country2;
 	}
 
 	public Set<Type> getTypes() {

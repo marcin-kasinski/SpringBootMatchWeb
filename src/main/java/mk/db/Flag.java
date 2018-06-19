@@ -20,19 +20,19 @@ public class Flag implements Serializable{
 	@Column(name = "flag_id")
 	private int id;
 
-	@Column(name = "country")
-	private String country;
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
+	@Column(name = "team")
+	private String team;
 
 	public String getUrl() {
 		return url;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
 	}
 
 	public void setUrl(String url) {

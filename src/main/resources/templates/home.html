@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Matches</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      
+      
+<style>
+#records {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    #width: 100%;
+}
+
+#records td, #records th {
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+#records tr:nth-child(even){background-color: #f2f2f2;}
+
+#records tr:hover {background-color: #ddd;}
+
+#records th {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+</style>      
+</head>
+
+<script>
+
+var myMap = new Map();
+
+myMap.set("key1", "val1");
+myMap.set("key2", "val2");
+
+
+var points = {};
+function addpoints(key, value) 
+{
+	var current_value=points[key];
+	
+	if (current_value === undefined) {
+		current_value=value;
+	}
+	else current_value=current_value+value;
+	
+	points[key]=current_value;
+	
+//	alert('current_value '+current_value);
+	
+}
+
+
+</script>
+
+
+<body>
+<h1>Witaj <span th:text="${user.name}" /></h1>
+
+	<h1>SpringBootMatch: Gry</h1>
+
+<table id="records">
+<tr><th>Gra</th></tr>
+
+<tr th:each="game : ${games}">
+	<td th:text="${game.id}" />
+<td>
+	<a th:href="@{/matches(game_id=${game.id})}">
+	<span th:text="${game.name}" />
+	</a>
+     
+
+</td>
+	
+
+
+    
+</tr>
+</table>
+
+  
+<script>
+
+//alert('start');
+
+for (const entry of myMap.entries()) {
+//	  alert(entry.value);
+	}
+
+//alert('end');
+
+</script>
+  
+
+    
+</body>
+</html>

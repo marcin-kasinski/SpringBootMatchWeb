@@ -9,11 +9,13 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,8 @@ import org.springframework.web.client.RestTemplate;
 
 import mk.db.Flag;
 import mk.db.FlagRepository;
+import mk.db.Game;
+import mk.db.GameRepository;
 import mk.db.Match;
 import mk.db.MatchRepository;
 import mk.db.MatchService;
@@ -77,6 +81,9 @@ class WebController {
 //	@Autowired	
 //	private Source source;
     
+    @Autowired
+    private GameRepository gameRepository;
+
     @Autowired
     private MatchRepository matchRepository;
 
@@ -118,7 +125,7 @@ class WebController {
     	
     	if (Util.isMatchVoted(match, user)) return "redirect:matches";
     	
-    	System.out.println("match "+match.getCountry1());
+    	//System.out.println("match "+match.getCountry1());
     	
     	Type type = new Type();
     	type.setScore1(score1);
@@ -140,7 +147,7 @@ class WebController {
 
     
     @GetMapping("/matches")
-    public String matchesVIEW(@RequestParam(required = false, defaultValue = "1", value="game") int game,Model model) {
+    public String matchesVIEW(@RequestParam(required = false, defaultValue = "1", value="game_id") int game,Model model) {
     	
 
 		//System.out.println("game id: "+game);
@@ -150,13 +157,16 @@ class WebController {
     	
     	Map points = new HashMap<String, Byte>();
     	
+
+
+    	
 //    	List<Match> matches= matchRepository.findAll();
     	
     	List<Flag> flags= flagRepository.findAll();
 
     	for (Iterator<Flag> iter = flags.iterator(); iter.hasNext(); ) {
     		Flag flag = iter.next();
-    		System.out.println("Flaga "+flag.getCountry()+" / "+ flag.getUrl());
+    		//System.out.println("Flaga "+flag.getCountry()+" / "+ flag.getUrl());
     	}
 
     	List<Match> matches= matchRepository.findByGame(game);
@@ -165,7 +175,7 @@ class WebController {
     	
     	for (Iterator<Match> iter = matches.iterator(); iter.hasNext(); ) {
     		Match match = iter.next();
-    		System.out.println("mecz "+match.getCountry1()+" - "+match.getCountry2());
+    		//System.out.println("mecz "+match.getCountry1()+" - "+match.getCountry2());
     	    // 1 - can call methods of element
     	    // 2 - can use iter.remove() to remove the current element from the list
     		
@@ -223,10 +233,11 @@ class WebController {
     	
     	
     	//iterate points:
-        	
+	
+        Map<String,Byte> sortedpoints =Util.sortByValue(points);
     	
        	model.addAttribute("matches",matches);
-       	model.addAttribute("points",points);
+       	model.addAttribute("points",sortedpoints);
        	model.addAttribute("user",user);
 
     	return "matches";
@@ -235,8 +246,16 @@ class WebController {
     @GetMapping("/")
     public String welcomeVIEW(Model model) {
 
+      	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	User user = userService.findUserByEmail(auth.getName());
+  
+    	List<Game> games= gameRepository.findAll();
+
+    	model.addAttribute("games",games);
+       	model.addAttribute("user",user);
+
     	System.out.println("END");
-        return "welcome";
+        return "home";
     }
 
 /*

@@ -62,6 +62,8 @@ function addpoints(key, value)
 
 
 <body>
+<h1>Witaj <span th:text="${user.name}" /></h1>
+
 	<h1>SpringBootMatch: Mecze</h1>
 
 <table id="records">
@@ -70,7 +72,7 @@ function addpoints(key, value)
 <tr th:each="match : ${matches}">
 	<td th:text="${match.play_time}"></td>
 	<td><img th:src="${match.flag1 != null} ? ${match.flag1.url}" width=42 height=28 /></td>
-	<td th:text="${match.country1} +' - '+ ${match.country2}"></td>
+	<td th:text="${match.team1} +' - '+ ${match.team2}"></td>
 	<td><img th:src="${match.flag2 != null} ? ${match.flag2.url}" width=42 height=28 /></td>
 	
 	<td th:switch="${match.closed}">
