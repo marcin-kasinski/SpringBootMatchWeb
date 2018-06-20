@@ -16,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
@@ -33,6 +35,7 @@ public class Match {
 	private int id;
 
 	@Column(name = "play_time")
+	@NotEmpty(message = "*Please provide an datetime")
 	private String play_time;
 
 	@Column(name = "team1")
@@ -71,12 +74,14 @@ public class Match {
 
 	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
 	@JoinTable(name = "match_type", joinColumns = @JoinColumn(name = "match_id"), inverseJoinColumns = @JoinColumn(name = "type_id"))
+	@OrderBy(value="user_id")
 	private Set<Type> types;
 
 	
 	
 //	@OneToOne( fetch = FetchType.EAGER, mappedBy="team")
-	@OneToOne( fetch = FetchType.EAGER)
+	@OneToOne( fetch = FetchType.EAGER	)
+	
     @JoinColumn(name = "team1", referencedColumnName="team" , nullable = false,insertable= false,  updatable=false)
     private Flag flag1;
 

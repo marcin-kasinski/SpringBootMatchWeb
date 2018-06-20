@@ -145,6 +145,22 @@ class WebController {
     	return "redirect:matches";
     }
 
+
+@GetMapping("/editmatch")
+public String editmatchVIEW(@RequestParam(required = true, value="match_id") int match_id,Model model) {
+
+	Match match =matchRepository.getOne(match_id);
+	model.addAttribute("match", match);
+	return "editmatch";
+
+}
+
+@PostMapping("/editmatch")
+public String editmatch(@RequestParam(required = true, value="match_id") int game,Model model) {
+
+	return "redirect:matches";
+
+}
     
     @GetMapping("/matches")
     public String matchesVIEW(@RequestParam(required = false, defaultValue = "1", value="game_id") int game,Model model) {
@@ -169,7 +185,8 @@ class WebController {
     		//System.out.println("Flaga "+flag.getCountry()+" / "+ flag.getUrl());
     	}
 
-    	List<Match> matches= matchRepository.findByGame(game);
+//    	List<Match> matches= matchRepository.findByGame(game);
+    	List<Match> matches= matchRepository.findByGameOrderByIdDesc(game);
 
     	System.out.println("Types");
     	

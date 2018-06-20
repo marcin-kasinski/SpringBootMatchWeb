@@ -13,6 +13,7 @@ import java.util.Map;
 import org.thymeleaf.util.StringUtils;
 
 import mk.db.Match;
+import mk.db.Role;
 import mk.db.Type;
 import mk.db.User;
 
@@ -44,10 +45,28 @@ public class Util {
 		
 	}
 	
+	public static boolean isAdmin(User user) {
+		boolean ret=false;
+		
+		
+		for (Iterator<Role> itertype = user.getRoles().iterator(); itertype.hasNext(); ) {
+    		Role role= itertype.next();
+    		
+    		
+    		if (role.getRole().equals("ADMIN")) {ret= true; break;}
+		}	
+    	
+		
+		return ret;
+		
+		
+		
+	}
+	
 	public static byte getPoints(Match match, Type type) {
 		byte ret=0;
 
-		if (!match.isClosed()) return 0;
+		if (!match.isClosed()) return -1;
 
 		byte score1= match.getScore1();
 		byte score2=match.getScore2();

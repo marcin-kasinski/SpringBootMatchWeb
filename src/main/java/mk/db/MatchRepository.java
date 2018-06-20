@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository("matchRepository")
 public interface MatchRepository extends JpaRepository<Match, Integer> {
 
-	List<Match> findByGame(int game_id);
+	List<Match> findByGameOrderByIdDesc(int game_id);
 	Match findById(int id);
 }

@@ -70,7 +70,20 @@ function addpoints(key, value)
 <tr><th>Godzna meczu</th><th colspan=3>Kto gra</th><th>Wynik</th><th colspan=2>Jak obstawiamy</th></tr>
 
 <tr th:each="match : ${matches}">
-	<td th:text="${match.play_time}"></td>
+	<td>
+	<th:block  th:if="${T(mk.tools.Util).isAdmin(user) == true }">
+	
+	
+	
+	
+	<a th:href="@{/editmatch(match_id=${match.id})}">
+	<img height=20 width=20 th:src="@{/images/edit.png}" />
+	</a>
+	
+	</th:block>
+
+	<span th:text="${match.play_time}" />
+	</td>
 	<td><img th:src="${match.flag1 != null} ? ${match.flag1.url}" width=42 height=28 /></td>
 	<td th:text="${match.team1} +' - '+ ${match.team2}"></td>
 	<td><img th:src="${match.flag2 != null} ? ${match.flag2.url}" width=42 height=28 /></td>
@@ -110,7 +123,10 @@ function addpoints(key, value)
 		</select> 
 
 
+<input type="image" name="color"  value="red"  alt="obstaw"  height=20 width=20 th:src="@{/images/add.png}" >
+	<!-- <input type="submit" value="go" th:style="'background:url(' + @{/images/bet.png} + ');'" />
         <input type="submit" value="Obstaw" />
+         -->
     </form></td>
     
     <td th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match.play_time) == false ||   T(mk.tools.Util).isMatchVoted(match, user) == true   }"> </td>
@@ -137,8 +153,24 @@ function addpoints(key, value)
 /*]]>*/
 </script>
       
-         <span th:text="${type.user.name} + ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-         <span th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+      <th:block th:switch="${T(mk.tools.Util).getPoints(match,type)}">
+         <th:block th:case="'3'"><img height=20 width=20 th:src="@{/images/ok.png}" />
+           <span style="color:green;font-weight: bold;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+           <span style="color:green;font-weight: bold;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+         </th:block> 
+         <th:block th:case="'0'"><img height=20 width=20 th:src="@{/images/notok.png}" />
+           <span style="color:red;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+           <span style="color:red;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+         </th:block> 
+         <th:block th:case="'1'">
+           <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+           <span th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+         </th:block> 
+         <th:block th:case="'-1'">
+           <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+           <span th:text="'( ? )'" />
+         </th:block> 
+      </th:block>   
       <td>
       </tr>
     </table>
@@ -168,7 +200,8 @@ Ranking:    <BR><BR>
 <table id="records">
 <tr th:each="point : ${points}">
 	<td th:text="${point.key}">keyvalue</td>
-    <td th:text="${point.value}">num</td>	
+    <td th:text="${point.value}">num</td>
+    <td>&nbsp;</td>
 
 </tr>    
 </table>

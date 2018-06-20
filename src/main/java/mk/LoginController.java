@@ -1,6 +1,9 @@
 package mk;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import mk.db.GameRepository;
+import mk.db.Role;
+import mk.db.RoleRepository;
 import mk.db.User;
+import mk.db.UserRepository;
 import mk.db.UserService;
 
 
 
 @Controller
 public class LoginController {
+	
+    @Autowired
+    private RoleRepository roleRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -45,6 +55,8 @@ public class LoginController {
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
+		
+		
 		if (userExists != null) {
 			bindingResult
 					.rejectValue("email", "error.user",
@@ -53,7 +65,24 @@ public class LoginController {
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
 		} else {
+			
+
+			System.out.println("Role1 : "+user.getRoles());
+
+			/*
+			
+			Role role= roleRepository.findByRole("USER");
+			Set<Role> roles = new HashSet();
+			roles.add(role);
+					user.setRoles(roles);
+//			user.getRoles().add(role);
+			System.out.println("Role2 : "+user.getRoles());
+			*/
+			
 			userService.saveUser(user);
+			//userRepository.
+			System.out.println("Role2 : "+user.getRoles());
+
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("registration");

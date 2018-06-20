@@ -130,9 +130,65 @@ INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-17 17:00:00', 'Niemcy', 'Meksyk', 0,1, 1);
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-17 20:00:00', 'Brazylia', 'Szwajcaria', 1,1, 1);
 
-INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-18 14:00:00', 'Szwecja', 'Korea Po³udniowa', NULL,NULL, 0);
-INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-18 17:00:00', 'Belgia', 'Panama', NULL,NULL, 0);
-INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-18 20:00:00', 'Tunezja', 'Anglia', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-18 14:00:00', 'Szwecja', 'Korea Po³udniowa', 1,0, 1);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-18 17:00:00', 'Belgia', 'Panama', 3,0, 1);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-18 20:00:00', 'Tunezja', 'Anglia', 1,2, 1);
+
+-- Mecze 19.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-19 14:00:00', 'Kolumbia', 'Japonia', 1,2, 1);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-19 17:00:00', 'Polska', 'Senegal', 1,2, 1);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-19 20:00:00', 'Rosja', 'Egipt', 3,1, 1);
+
+-- Mecze 20.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-20 14:00:00', 'Portugalia', 'Maroko', 1,0, 1);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-20 17:00:00', 'Urugwaj', 'Arabia Saudyjska', 1,0, 1);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-20 20:00:00', 'Iran', 'Hiszpania', 0,1, 1);
+
+-- Mecze 21.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-21 14:00:00', 'Dania', 'Australia', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-21 17:00:00', 'Francja', 'Peru', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-21 20:00:00', 'Argentyna', 'Chorwacja', NULL,NULL, 0);
+
+-- Mecze 22.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-22 14:00:00', 'Brazylia', 'Kostaryka', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-22 17:00:00', 'Nigeria', 'Islandia', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-22 20:00:00', 'Serbia', 'Szwajcaria', NULL,NULL, 0);
+
+-- Mecze 23.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-23 14:00:00', 'Belgia', 'Tunezja', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-23 17:00:00', 'Korea Po³udniowa', 'Meksyk', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-23 20:00:00', 'Niemcy', 'Szwecja', NULL,NULL, 0);
+
+-- Mecze 24.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-24 14:00:00', 'Anglia', 'Panama', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-24 17:00:00', 'Japonia', 'Senegal', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-24 20:00:00', 'Polska', 'Kolumbia', NULL,NULL, 0);
+
+-- Mecze 25.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-25 16:00:00', 'Arabia Saudyjska', 'Egipt', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-25 16:00:00', 'Urugwaj', 'Rosja', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-25 20:00:00', 'Iran', 'Portugalia', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-25 20:00:00', 'Hiszpania', 'Maroko', NULL,NULL, 0);
+
+-- Mecze 26.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-26 16:00:00', 'Australia', 'Peru', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-26 16:00:00', 'Dania', 'Francja', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-26 20:00:00', 'Nigeria', 'Argentyna', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-26 20:00:00', 'Islandia', 'Chorwacja', NULL,NULL, 0);
+
+-- Mecze 27.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-27 16:00:00', 'Meksyk', 'Szwecja', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-27 16:00:00', 'Korea Po³udniowa', 'Niemcy', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-27 20:00:00', 'Szwajcaria', 'Kostaryka', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-27 20:00:00', 'Serbia', 'Brazylia', NULL,NULL, 0);
+
+-- Mecze 28.06
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-28 16:00:00', 'Senegal', 'Kolumbia', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-28 16:00:00', 'Japonia', 'Polska', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-28 20:00:00', 'Anglia', 'Belgia', NULL,NULL, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-28 20:00:00', 'Panama', 'Tunezja', NULL,NULL, 0);
+
+
 
 
 CREATE TABLE `type` (
@@ -270,8 +326,6 @@ INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 11, 33);-- michal.kor
 INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (34,  3, 0, 3);-- mariuszpanek17@gmail.com
 INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 11, 34);-- mariuszpanek17@gmail.com
 
-
-
 -- Szwecja Korea
 INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (35,  2, 1, 1);-- marcin.kasinski@gmail.com
 INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 12, 35);-- marcin.kasinski@gmail.com
@@ -281,6 +335,86 @@ INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 12, 36);-- michal.kor
 
 INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (37,  1, 1, 3);-- mariuszpanek17@gmail.com
 INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 12, 37);-- mariuszpanek17@gmail.com
+
+-- Belgia Panama
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (38,  3, 0, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 13, 38);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (39,  3, 0, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 13, 39);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (40,  4, 0, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 13, 40);-- mariuszpanek17@gmail.com
+
+-- Tunezja Anglia
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (41,  0, 3, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 14, 41);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (42,  0, 2, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 14, 42);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (43,  0, 1, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 14, 43);-- mariuszpanek17@gmail.com
+
+-- Kolumbia Japonia
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (44,  2, 1, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 15, 44);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (45,  1, 0, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 15, 45);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (46,  1, 0, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 15, 46);-- mariuszpanek17@gmail.com
+
+-- Polska Senegal
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (47,  2, 0, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 16, 47);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (48,  2, 1, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 16, 48);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (49,  1, 1, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 16, 49);-- mariuszpanek17@gmail.com
+
+-- Rosja Egipt
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (50,  0, 1, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 17, 50);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (51,  1, 1, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 17, 51);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (52,  1, 1, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 17, 52);-- mariuszpanek17@gmail.com
+
+-- Portugalia Maroko
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (53,  2, 0, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 18, 53);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (54,  3, 0, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 18, 54);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (55,  3, 0, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 18, 55);-- mariuszpanek17@gmail.com
+
+-- Urugwaj Arabia Saudyjska
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (56,  4, 0, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 19, 56);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (57,  3, 0, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 19, 57);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (58,  3, 0, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 19, 58);-- mariuszpanek17@gmail.com
+
+-- Iran Hiszpania
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (59,  0, 2, 1);-- marcin.kasinski@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 20, 59);-- marcin.kasinski@gmail.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (60,  0, 3, 2);-- michal.korycki@stx-jamboree.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 20, 60);-- michal.korycki@stx-jamboree.com
+
+INSERT INTO `type` ( `type_id`, `score1`, `score2`,`user_id`) VALUES (61,  0, 2, 3);-- mariuszpanek17@gmail.com
+INSERT INTO `match_type` ( `match_id`, `type_id`) VALUES ( 20, 61);-- mariuszpanek17@gmail.com
 
 
 
