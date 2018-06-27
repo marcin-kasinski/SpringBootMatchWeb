@@ -67,6 +67,19 @@ public class Match {
 	@Column(name = "score2")
 	private Byte score2;
 
+	@Column(name = "penalties")
+	boolean penalties;
+
+	
+	
+	public boolean isPenalties() {
+		return penalties;
+	}
+
+	public void setPenalties(boolean penalties) {
+		this.penalties = penalties;
+	}
+
 	@Column(name = "closed")
 	private boolean closed;
 

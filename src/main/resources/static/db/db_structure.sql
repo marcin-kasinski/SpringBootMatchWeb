@@ -192,6 +192,8 @@ INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-28 20:00:00', 'Panama', 'Tunezja', NULL,NULL, 0);
 
 
+-- Mecze 1/8 fina³u
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-06-30 16:00:00', 'Francja', 'Argentyna', NULL,NULL,1, 0);
 
 
 CREATE TABLE `type` (
