@@ -118,6 +118,9 @@ CREATE TABLE `match` (
   CONSTRAINT `sdsdFK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+ALTER TABLE `match` ADD `penalties` BIT NOT NULL DEFAULT 0 AFTER `score2` ;
+
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-14 16:00:00', 'Rosja', 'Arabia Saudyjska', '5', '0', '1');
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-15 12:00:00', 'Egipt', 'Urugwaj', '0', '1', '1');
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-15 16:00:00', 'Maroko', 'Iran', '0', '1', '1');
@@ -199,6 +202,10 @@ CREATE TABLE `type` (
   PRIMARY KEY (`type_id`),
   CONSTRAINT `vvaFK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `type` ADD `penaltieswinner` VARCHAR( 120 ) NULL DEFAULT NULL AFTER `score2` ;
+ALTER TABLE `type` CHANGE `penaltieswinner` `penaltieswinner` VARCHAR( 120 ) CHARACTER SET utf8 COLLATE utf8_polish_ci NULL DEFAULT NULL ;
 
 CREATE TABLE `match_type` (
   `match_id` int(11) NOT NULL,

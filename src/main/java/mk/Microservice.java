@@ -85,13 +85,13 @@ public class Microservice {
     	type.setScore2(score2);
     	type.setUser(user);
 
-//    	System.out.println("match_id "+match_id);
-//    	System.out.println("type score1 "+type.getScore1());
-//    	System.out.println("type score2 "+type.getScore2());
+    	System.out.println("match_id "+match_id);
+    	System.out.println("type score1 "+type.getScore1());
+    	System.out.println("type score2 "+type.getScore2());
     	
     	match.getTypes().add(type);
     	
-    	matchRepository.save(match);
+    	//matchRepository.save(match);
     	    	
     	System.out.println("type saved");
     	

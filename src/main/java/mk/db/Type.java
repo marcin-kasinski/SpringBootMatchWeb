@@ -30,8 +30,24 @@ public class Type {
 
 	@Column(name = "score1")
 	private Byte score1;
+
+	@Column(name = "score2")
+	private Byte score2;
 	
+	@Column(name = "penaltieswinner")
+	private String penaltieswinner;
 	
+
+
+
+	public String getPenaltieswinner() {
+		return penaltieswinner;
+	}
+
+	public void setPenaltieswinner(String penaltieswinner) {
+		this.penaltieswinner = penaltieswinner;
+	}
+
 	@OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -67,9 +83,5 @@ public class Type {
 	public void setScore2(Byte score2) {
 		this.score2 = score2;
 	}
-
-	@Column(name = "score2")
-	private Byte score2;
-
 
 }
