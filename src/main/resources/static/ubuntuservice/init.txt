@@ -71,7 +71,7 @@ sudo systemctl daemon-reload
 
 sudo systemctl enable my-webapp.service
 
-	sudo systemctl stop my-webapp
+sudo systemctl stop my-webapp
 sudo systemctl start my-webapp
 
 #sudo systemctl status my-webapp
@@ -80,3 +80,4 @@ sudo systemctl start my-webapp
 #Step 4: LOG
 
 sudo journalctl -f -u my-webapp
+

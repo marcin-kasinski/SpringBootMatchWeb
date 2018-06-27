@@ -8,6 +8,13 @@
       
       
 <style>
+
+#header {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
 #records {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -62,7 +69,12 @@ function addpoints(key, value)
 
 
 <body>
-<h1>Witaj <span th:text="${user.name}" /></h1>
+<table id="header"><tr>
+<td><h1>Witaj <span th:text="${user.name}" /></h1></td>
+<td><a th:href="@{/logout}">Logout</a></td>
+</tr></table>
+
+
 
 	<h1>SpringBootMatch: Gry</h1>
 

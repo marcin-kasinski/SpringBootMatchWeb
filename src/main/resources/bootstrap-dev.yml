@@ -1,7 +1,7 @@
 logging:
     level:
         root: INFO 
-    file: logs/application.log
+    #file: logs/application.log
 server:
     port: 7070
 spring:

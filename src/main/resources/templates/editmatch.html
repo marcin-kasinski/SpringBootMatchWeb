@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Registration Form</title>
+	<title>Edit match Form</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,12 +20,15 @@
 				<form autocomplete="off" action="#" th:action="@{/editmatch}"
 					th:object="${match}" method="post" class="form-horizontal"
 					role="form">
+					<input type="hidden" id="id" th:field="*{id}"/>
+					
+					
 					<h2>Edit match Form</h2>
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label th:if="${#fields.hasErrors('play_time')}" th:errors="*{play_time}"
 								class="validation-message"></label>
-						<input type="text" th:field="*{play_time}" placeholder="play_time"
+						<input type="datetime-local" th:value="*{play_time}" placeholder="play_time"
 								class="form-control" /> 
 						</div>
 					</div>
@@ -36,8 +39,48 @@
 								class="validation-message"></label>
 							<input type="text" th:field="*{team1}"
 								placeholder="team1" class="form-control" /> 
+								
+<select name="score1"  class="form-control" placeholder="score1" >
+	<th:block th:each="score : ${scores}">
+  		<th:block th:switch="${score}">
+  		    <option  th:case="${match.score1}" th:text="${score}" th:value="${score}" selected></option>
+  			<option  th:case="*" th:text="${score}" th:value="${score}" ></option>
+  		<th:block>
+	</th:block>
+</select> 
+							
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	th:if="${#fields.hasErrors('team2')}" th:errors="*{team2}"
+								class="validation-message"></label>
+							<input type="text" th:field="*{team2}"
+								placeholder="team2" class="form-control" /> 
+<select name="score2"  class="form-control" placeholder="score2" >
+	<th:block th:each="score : ${scores}">
+  		<th:block th:switch="${score}">
+  		    <option  th:case="${match.score2}" th:text="${score}" th:value="${score}" selected></option>
+  			<option  th:case="*" th:text="${score}" th:value="${score}" ></option>
+  		<th:block>
+	</th:block>
+</select> 
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label>Mecz skończony ?</label>
+						<label th:if="${#fields.hasErrors('closed')}" th:errors="*{closed}"
+								class="validation-message"></label>
+						<input type="checkbox" th:checked="*{closed}" placeholder="closed"
+								class="form-control" /> 
+						</div>
+					</div>
+
+
 				
 					<div class="form-group">
 						<div class="col-sm-9">

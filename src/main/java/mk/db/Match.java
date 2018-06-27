@@ -1,6 +1,7 @@
 package mk.db;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "`match`")
@@ -36,7 +38,22 @@ public class Match {
 
 	@Column(name = "play_time")
 	@NotEmpty(message = "*Please provide an datetime")
-	private String play_time;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime play_time;
+
+	@Override
+	public String toString() {
+		return "Match [id=" + id + ", play_time=" + play_time + ", team1=" + team1 + ", team2=" + team2 + ", score1="
+				+ score1 + ", score2=" + score2 + ", closed=" + closed + ", game=" + game + ", types=" + types + "]";
+	}
+
+	public LocalDateTime getPlay_time() {
+		return play_time;
+	}
+
+	public void setPlay_time(LocalDateTime play_time) {
+		this.play_time = play_time;
+	}
 
 	@Column(name = "team1")
 	private String team1;
@@ -72,52 +89,27 @@ public class Match {
 		this.closed = closed;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "match_type", joinColumns = @JoinColumn(name = "match_id"), inverseJoinColumns = @JoinColumn(name = "type_id"))
-	@OrderBy(value="user_id")
+	@OrderBy(value = "user_id")
 	private Set<Type> types;
 
-	
-	
-//	@OneToOne( fetch = FetchType.EAGER, mappedBy="team")
-	@OneToOne( fetch = FetchType.EAGER	)
-	
-    @JoinColumn(name = "team1", referencedColumnName="team" , nullable = false,insertable= false,  updatable=false)
-    private Flag flag1;
+	// @OneToOne( fetch = FetchType.EAGER, mappedBy="team")
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "team1", referencedColumnName = "team", nullable = false, insertable = false, updatable = false)
+//	private Flag flag1;
 
-public Flag getFlag1() {
-		return flag1;
-	}
+	// @OneToOne( fetch = FetchType.EAGER, mappedBy="team")
+//	@OneToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "team2", referencedColumnName = "team", nullable = false, insertable = false, updatable = false)
+//	private Flag flag2;
 
-	public void setFlag1(Flag flag1) {
-		this.flag1 = flag1;
-	}
-
-	public Flag getFlag2() {
-		return flag2;
-	}
-
-	public void setFlag2(Flag flag2) {
-		this.flag2 = flag2;
-	}
-
-	//	@OneToOne( fetch = FetchType.EAGER, mappedBy="team")
-	@OneToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name = "team2", referencedColumnName="team", nullable = false,insertable= false,  updatable=false)
-    private Flag flag2;
-
-	
-	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getPlay_time() {
-		return play_time;
 	}
 
 	public String getTeam1() {
@@ -134,10 +126,6 @@ public Flag getFlag1() {
 
 	public void setTeam2(String team2) {
 		this.team2 = team2;
-	}
-
-	public void setPlay_time(String play_time) {
-		this.play_time = play_time;
 	}
 
 	public Set<Type> getTypes() {
@@ -159,9 +147,6 @@ public Flag getFlag1() {
 	public void setScore2(Byte score2) {
 		this.score2 = score2;
 	}
-
-
-
 
 	public void setTypes(Set<Type> types) {
 		this.types = types;

@@ -8,6 +8,13 @@
       
       
 <style>
+
+#header {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
 #records {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -33,13 +40,174 @@
 </style>      
 </head>
 
-<script>
+     <script th:inline="javascript">
 
+     
+     var logged_user = [[${user.name}]];
+     
 var myMap = new Map();
 
 myMap.set("key1", "val1");
 myMap.set("key2", "val2");
 
+
+function getValue(id ) {
+
+var element=document.getElementById(id);
+if (element==null) return null;
+return element.value;
+
+}
+
+function processAjaxRequest(divid, file, callbackfunction, matchid,score1, score2,async) 
+
+{
+
+ if (typeof(async)=='undefined') async=true;
+
+
+  var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+           if (xmlhttp.status == 200) {
+
+			callbackfunction(divid, file, matchid, score1, score2,xmlhttp.responseText);
+			
+           }
+           else if (xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+
+    xmlhttp.open("GET", file, async);
+    xmlhttp.send();
+			
+}			
+
+
+
+function processAjaxAddVoteToList(divid, file,matchid,score1, score2, injson) 
+
+{
+	try {
+		var obj = JSON.parse(injson);
+} catch(e) {
+        alert('Błąd zapisu danych ' +e); // error in the above string (in this case, yes)!
+        return;
+    }						
+
+
+var status = obj.status; 
+var message = obj.message; 
+
+if (status =='OK') 
+	
+	{
+//	alert('Jest OK'); 
+	var formtable=document.getElementById('tdvoteform_' +matchid);
+	formtable.innerHTML='';
+		addvotetolist(matchid,'false', logged_user,0, score1, score2);
+	
+	}
+else 
+	{
+	alert('Błąd zapisu danych ' + status +' '+message); 
+	return;
+	}
+
+
+	
+	/*
+	
+		
+	
+		var size = obj.MDNSDevices.length; 
+	
+		var table=document.getElementById(divid);
+
+		for (i = 0; i < size; i++) 
+		{
+			var row = table.insertRow(i+1);	
+			row.outerHTML='<tr class="cbi-section-table-row cbi-rowstyle-1"><td><a href="http://'+obj.MDNSDevices[i].IP.trim()+'">'+obj.MDNSDevices[i].hostname.trim()+'</a></td><td>'+obj.MDNSDevices[i].IP.trim()+'</td><td>'+obj.MDNSDevices[i].firmware_version.trim()+'</td><td>'+obj.MDNSDevices[i].uptime.trim()+'</td><td>'+obj.MDNSDevices[i].timestamp.trim()+'</td></tr>';						
+			
+			}	
+	*/
+
+
+}			
+
+function addvotetolist(matchid,match_closed, user, point, score1, score2)
+{	
+//	if (matchid==48)
+//{
+//	alert('advotetolist 1 matchid ' +matchid+' user '+ user+' point '+ point+' / match_closed '+ match_closed);
+//	}
+	
+//	alert("addvotetolist");
+	
+	var votestable=document.getElementById('types_for_match_' +matchid);
+
+//	if (matchid==48)
+//	{
+//	alert('advotetolist 2 matchid ' +matchid+' user '+ user+' point '+ point+' / match_closed '+ match_closed);
+//	}
+
+	var content=votestable.innerHTML;
+
+	if (match_closed=='false') votestable.innerHTML=content
+	+'<td>'+
+	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
+	'<span>'+user+' : '+ score1+' - '+score2   +'</span>&nbsp;'+
+	'<span>( ? )</span>'+
+	'</td>';
+
+	else if (point==3) votestable.innerHTML=content
+	+'<td>'+
+	'<img height=20 width=20 src="/images/ok.png" />&nbsp;'+
+	'<span style="color:green;font-weight: bold;">'+user+' : '+ score1+' - '+score2   +'</span>&nbsp;'+
+	'<span style="color:green;font-weight: bold;">( '+point  +' )</span>'+
+	'</td>';
+	
+	else if (point==1) votestable.innerHTML=content
+	+'<td>'+
+	'<img height=20 width=20 src="/images/notok.png" />&nbsp;'+
+	'<span>'+user+' : '+ score1+' - '+score2   +'</span>&nbsp;'+
+	'<span>( '+point  +' )</span>'+
+	'</td>';
+	else if (point==0) votestable.innerHTML=content
+	+'<td>'+
+	'<img height=20 width=20 src="/images/notok.png" />&nbsp;'+
+	'<span style="color:red;font-weight: bold;">'+user+' : '+ score1+' - '+score2   +'</span>&nbsp;'+
+	'<span style="color:red;font-weight: bold;">( '+point  +' )</span>'+
+	'</td>';
+	
+//	if (matchid==48)
+//	{
+//	alert('advotetolist 3 matchid ' +matchid+' user '+ user+' point '+ point+' / match_closed '+ match_closed);
+//	}
+}
+
+function onclickvote(matchid)
+{
+//	alert("aaa " +matchid);
+	
+	var score1=getValue('score1_'+matchid) ;
+	var score2=getValue('score2_'+matchid) ;
+
+//	alert("matchid " +matchid+" score1 " +score1+" score2 " +score2);
+
+//function processAjaxRequest(divid, file, callbackfunction, matchid,score1, score2,async) 
+
+	processAjaxRequest('other_devices_table', '/api/vote?match_id='+matchid+'&score1='+score1+'&score2='+score2,processAjaxAddVoteToList,matchid,score1, score2);
+
+	
+	
+}
 
 var points = {};
 function addpoints(key, value) 
@@ -61,16 +229,39 @@ function addpoints(key, value)
 </script>
 
 
-<body>
-<h1>Witaj <span th:text="${user.name}" /></h1>
+<body style="background-size:contain;background-repeat:no-repeat;" th:background="@{/images/girl.jpg}">
+<table id="header"><tr>
+<td><h1>Witaj <span th:text="${user.name}" /></h1></td>
+<td><a th:href="@{/logout}">Logout</a></td>
+</tr></table>
+
 
 	<h1>SpringBootMatch: Mecze</h1>
+
+Ranking:    <BR><BR>    
+    
+<table id="records">
+<tr th:each="point : ${points}">
+	<td th:text="${point.key}">keyvalue</td>
+    <td th:text="${point.value}">num</td>
+    <td>&nbsp;</td>
+
+</tr>    
+</table>
+    
+    
+<BR>
 
 <table id="records">
 <tr><th>Godzna meczu</th><th colspan=3>Kto gra</th><th>Wynik</th><th colspan=2>Jak obstawiamy</th></tr>
 
 <tr th:each="match : ${matches}">
 	<td>
+	
+	
+
+	
+	
 	<th:block  th:if="${T(mk.tools.Util).isAdmin(user) == true }">
 	
 	
@@ -82,23 +273,23 @@ function addpoints(key, value)
 	
 	</th:block>
 
-	<span th:text="${match.play_time}" />
+	<span th:text="${#temporals.format(match.play_time, 'yyyy-MM-dd HH:mm')}" />
 	</td>
-	<td><img th:src="${match.flag1 != null} ? ${match.flag1.url}" width=42 height=28 /></td>
+	<td><img th:src="${flags.get(match.team1) != null} ? ${flags.get(match.team1)}" width=42 height=28 /></td>
 	<td th:text="${match.team1} +' - '+ ${match.team2}"></td>
-	<td><img th:src="${match.flag2 != null} ? ${match.flag2.url}" width=42 height=28 /></td>
+	<td><img th:src="${flags.get(match.team2) != null} ? ${flags.get(match.team2)}" width=42 height=28 /></td>
 	
 	<td th:switch="${match.closed}">
     <span th:case="true" th:text="${match.score1} +' - '+ ${match.score2}" /> 
     <span th:case="false" th:text="'? - ?'" />
 </td>
 	
-	
-	<td th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match.play_time) == true    &&   T(mk.tools.Util).isMatchVoted(match, user) == false  }"> <form action="/vote" method="post">
+	<td th:id="'tdvoteform_' + ${match.id}" th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match) == true    &&   T(mk.tools.Util).isMatchVoted(match, user) == false  }"> 
+	<form action="/vote" method="get">
 		
 		<input type = hidden name="match_id" th:value="${match.id}">
 
-   		<select name="score1">
+   		<select name="score1" th:id="'score1_' + ${match.id}">
   		<option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -110,7 +301,7 @@ function addpoints(key, value)
   		<option value="8">8</option>
 		</select> 
 
-   		<select name="score2">
+   		<select name="score2" th:id="'score2_' + ${match.id}">
   		<option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -123,61 +314,125 @@ function addpoints(key, value)
 		</select> 
 
 
-<input type="image" name="color"  value="red"  alt="obstaw"  height=20 width=20 th:src="@{/images/add.png}" >
+<input type="image" name="color"  value="red"  alt="obstaw"  height=20 width=20 th:src="@{/images/add.png}" th:onclick="'onclickvote(' + ${match.id} + '); return false;'" >
 	<!-- <input type="submit" value="go" th:style="'background:url(' + @{/images/bet.png} + ');'" />
         <input type="submit" value="Obstaw" />
          -->
-    </form></td>
+    </form>
+    </td>
     
-    <td th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match.play_time) == false ||   T(mk.tools.Util).isMatchVoted(match, user) == true   }"> </td>
+    <!-- nie ma formularza od głosowanie -->
+    <td id=tdvoteform th:if="${T(mk.tools.Util).isCurrentDateTimeEalier(match) == false ||   T(mk.tools.Util).isMatchVoted(match, user) == true   }"> </td>
     <td>
     
     
+    
     <table>
-      <tr>
-      <td th:each="type : ${match.types}">
+<tr th:id="'types_for_match_' + ${match.id}"/>
+<tr>
+      
+      
+
+  <th:block th:each="type : ${match.types}">
       
      <script th:inline="javascript">
 /*<![CDATA[*/
 
-    var email = [[${type.user.email}]];
+    var match_id = [[${match.id}]];
+    var match_closed = '[[${match.closed}]]';
+    var user = [[${type.user.name}]];
     var points = [[${T(mk.tools.Util).getPoints(match,type)}]];
+    var score1 = [[${type.score1}]];
+    var score2 = [[${type.score2}]];
 
+    addvotetolist(match_id, match_closed,user, points, score1, score2);
+    
     
 //    alert (email+ ' / '+points);
     
-    addpoints(email, points) ;
+//    addpoints(email, points) ;
 //    addpoints("Marcin", points) ;
 
 
 /*]]>*/
 </script>
+
+      </th:block>
       
+            
+         <!------------------------------------------ -->
+      <!-- 
+      
+     <td th:each="type : ${match.types}"> 
+    
+
+
       <th:block th:switch="${T(mk.tools.Util).getPoints(match,type)}">
-         <th:block th:case="'3'"><img height=20 width=20 th:src="@{/images/ok.png}" />
+         <th:block th:case="'3'">
+           <img height=20 width=20 th:src="@{/images/ok.png}" />
            <span style="color:green;font-weight: bold;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
            <span style="color:green;font-weight: bold;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
          </th:block> 
-         <th:block th:case="'0'"><img height=20 width=20 th:src="@{/images/notok.png}" />
-           <span style="color:red;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-           <span style="color:red;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+         <th:block th:case="'0'">
+         
+
+           <th:block th:switch="${match.closed}">
+             <th:block th:case="true">
+               <img height=20 width=20 th:src="@{/images/notok.png}" />
+               <span style="color:red;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+               <span style="color:red;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
+             </th:block> 
+             <th:block th:case="false">
+               <img height=20 width=20 th:src="@{/images/none.png}" />
+               <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
+               <span th:text="'( ? )'" />
+             </th:block> 
+           </th:block> 
+
+
+
          </th:block> 
+
+
+
+
+
+
          <th:block th:case="'1'">
+           <img height=20 width=20 th:src="@{/images/none.png}" />
            <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
            <span th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
-         </th:block> 
-         <th:block th:case="'-1'">
-           <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-           <span th:text="'( ? )'" />
          </th:block> 
       </th:block>   
       <td>
       </tr>
     </table>
     </td>
-    
+     -->
+   <!------------------------------------------ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 </tr>
+
+
 </table>
 
   
@@ -192,24 +447,5 @@ for (const entry of myMap.entries()) {
 //alert('end');
 
 </script>
-  
-<BR>    
-    
-Ranking:    <BR><BR>    
-    
-<table id="records">
-<tr th:each="point : ${points}">
-	<td th:text="${point.key}">keyvalue</td>
-    <td th:text="${point.value}">num</td>
-    <td>&nbsp;</td>
-
-</tr>    
-</table>
-    
-    
-    
-    
-
-    
 </body>
 </html>

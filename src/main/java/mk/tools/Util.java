@@ -1,9 +1,11 @@
 package mk.tools;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -66,7 +68,7 @@ public class Util {
 	public static byte getPoints(Match match, Type type) {
 		byte ret=0;
 
-		if (!match.isClosed()) return -1;
+		if (!match.isClosed()) return 0;
 
 		byte score1= match.getScore1();
 		byte score2=match.getScore2();
@@ -90,15 +92,13 @@ public class Util {
 		return ret;
 	}
 	
-	public static boolean isCurrentDateTimeEalier(String datetime) {
+	public static boolean isCurrentDateTimeEalier(Match match) {
 
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String datetime =match.getPlay_time().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	    String current =sdf.format(Calendar.getInstance().getTime());
-		
-		
-//		System.out.println("current     :"+current);
-//		System.out.println("in datetime :"+datetime);
+				
+//		System.out.println("current     :"+current +" in datetime :"+datetime+" "+current.compareTo(datetime));
 				
 		if (current.compareTo(datetime)<0) return true ;
 		else return false;

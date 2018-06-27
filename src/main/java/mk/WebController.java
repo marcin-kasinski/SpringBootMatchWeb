@@ -109,41 +109,8 @@ class WebController {
     
 	 private static Logger log = LoggerFactory.getLogger(WebController.class);
 
-@PostMapping("/vote")
-    public String votePOST(
-    		@RequestParam(value="match_id") int match_id,
-    		@RequestParam(value="score1") byte score1,
-    		@RequestParam(value="score2") byte score2,
-    		
-    		Model model) {
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	User user = userService.findUserByEmail(auth.getName());
+//@GetMapping("/vote")
 
-//    	Match match = matchRepository.findById((long) match_id);
-    	Match match = matchRepository.findById(match_id);
-
-    	
-    	if (Util.isMatchVoted(match, user)) return "redirect:matches";
-    	
-    	//System.out.println("match "+match.getCountry1());
-    	
-    	Type type = new Type();
-    	type.setScore1(score1);
-    	type.setScore2(score2);
-    	type.setUser(user);
-    	
-    	match.getTypes().add(type);
-    	
-    	matchRepository.save(match);
-    	
-//    	typeRepository.save(type);
-    	
-    	System.out.println("type saved");
-    	
-    
-    	
-    	return "redirect:matches";
-    }
 
 
 @GetMapping("/editmatch")
@@ -151,13 +118,32 @@ public String editmatchVIEW(@RequestParam(required = true, value="match_id") int
 
 	Match match =matchRepository.getOne(match_id);
 	model.addAttribute("match", match);
+
+	ArrayList<String> scores= new ArrayList<String>();
+
+	for (int i=0;i<9 ;i++)
+	{
+		scores.add(String.valueOf(i));
+		
+	}
+	
+	
+	model.addAttribute("match", match);
+	model.addAttribute("scores", scores);
+
+	
+	
+	
 	return "editmatch";
 
 }
 
 @PostMapping("/editmatch")
-public String editmatch(@RequestParam(required = true, value="match_id") int game,Model model) {
+public String editmatch(@ModelAttribute Match match,Model model) {
 
+	
+	System.out.println(match);
+	
 	return "redirect:matches";
 
 }
@@ -173,20 +159,29 @@ public String editmatch(@RequestParam(required = true, value="match_id") int gam
     	
     	Map points = new HashMap<String, Byte>();
     	
+    	List<Flag> flags = new ArrayList<Flag>();
+    	
+    	flags= flagRepository.findAll();
 
-
+    	Map flagsMap= new HashMap<String, Flag>();
     	
 //    	List<Match> matches= matchRepository.findAll();
     	
-    	List<Flag> flags= flagRepository.findAll();
+//    	List<Flag> flags= flagRepository.findAll();
 
-    	for (Iterator<Flag> iter = flags.iterator(); iter.hasNext(); ) {
-    		Flag flag = iter.next();
+//    	for (Iterator<Flag> iter = flags.iterator(); iter.hasNext(); ) {
+//    		Flag flag = iter.next();
     		//System.out.println("Flaga "+flag.getCountry()+" / "+ flag.getUrl());
-    	}
+//    	}
 
 //    	List<Match> matches= matchRepository.findByGame(game);
+
+		System.out.println("BEFORE List<Match> matches");
+
+    	
     	List<Match> matches= matchRepository.findByGameOrderByIdDesc(game);
+
+		System.out.println("AFTER List<Match> matches");
 
     	System.out.println("Types");
     	
@@ -249,10 +244,25 @@ public String editmatch(@RequestParam(required = true, value="match_id") int gam
         }
     	
     	
-    	//iterate points:
+
 	
         Map<String,Byte> sortedpoints =Util.sortByValue(points);
-    	
+
+
+    	//iterate flags:
+
+
+        System.out.println("ITERATE FLAGS START "+flags.size());
+
+
+        for(Flag flag : flags) {
+        	//necessary code here
+        	flagsMap.put(flag.getTeam(),flag.getUrl());
+        }
+        
+        System.out.println("ITERATE FLAGS END");
+        
+       	model.addAttribute("flags",flagsMap);
        	model.addAttribute("matches",matches);
        	model.addAttribute("points",sortedpoints);
        	model.addAttribute("user",user);
