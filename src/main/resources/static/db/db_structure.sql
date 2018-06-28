@@ -120,6 +120,11 @@ CREATE TABLE `match` (
 
 
 ALTER TABLE `match` ADD `penalties` BIT NOT NULL DEFAULT 0 AFTER `score2` ;
+ALTER TABLE `match` ADD `penaltieswinner` VARCHAR( 120 ) NULL DEFAULT NULL AFTER `penalties` ;
+ALTER TABLE `match` CHANGE `penaltieswinner` `penaltieswinner` VARCHAR( 120 ) CHARACTER SET utf8 COLLATE utf8_polish_ci NULL DEFAULT NULL ;
+
+
+
 
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-14 16:00:00', 'Rosja', 'Arabia Saudyjska', '5', '0', '1');
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`, `closed`) VALUES (1,  '2018-06-15 12:00:00', 'Egipt', 'Urugwaj', '0', '1', '1');
@@ -194,6 +199,11 @@ INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`
 
 -- Mecze 1/8 fina³u
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-06-30 16:00:00', 'Francja', 'Argentyna', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-06-30 20:00:00', 'Urugwaj', 'Portugalia', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-01 16:00:00', 'Hiszpania', 'Rosja', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-01 20:00:00', 'Chorwacja', 'Dania', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-02 16:00:00', 'Brazylia', 'Meksyk', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-02 16:00:00', 'Szwecja', 'Szwajcaria', NULL,NULL,1, 0);
 
 
 CREATE TABLE `type` (

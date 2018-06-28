@@ -43,6 +43,24 @@
      <script th:inline="javascript">
 
      
+
+
+     function setElementVisibility(id ,value, showvalue) {
+
+     var element=document.getElementById(id);
+
+//     if (typeof(showvalue)==='undefined') showvalue = 'display:table';
+       if (typeof(showvalue)==='undefined') showvalue = 'display: inline';
+          
+     if (element==null) return;
+
+     if (value=="0" || value=="false" || value==false ) element.setAttribute('style','display:none');
+     if (value=="1" || value=="true"  || value==true ) element.setAttribute('style',showvalue);
+
+     }
+
+
+     
      var logged_user = [[${user.name}]];
      
 var myMap = new Map();
@@ -146,13 +164,18 @@ else
 
 function addvotetolist(type)
 {	
-//	if (type.match_id==48)
+//	if (type.match_id==54)
 //{
-//	alert('advotetolist 1 matchid ' +type.match_id+' user '+ type.user+' point '+ type.point+' / match_closed '+ type.match_closed);
+//		if(	type.penaltieswinner=='' ) alert('String ');
+//		if(	type.penaltieswinner==null ) alert("null" );
+//	alert('advotetolist 1 matchid ' +type.match_id+' user '+ type.user+' point '+ type.point+' penaltieswinner ['+ type.penaltieswinner+'] / match_closed '+ type.match_closed);
 //	}
 	
 //	alert("addvotetolist");
-	
+
+	var penaltiestypestring ='';
+	if (type.penaltieswinner!=null)penaltiestypestring ='Karne :'+type.penaltieswinner;
+
 	var votestable=document.getElementById('types_for_match_' +type.match_id);
 
 //	if (matchid==48)
@@ -166,6 +189,7 @@ function addvotetolist(type)
 	+'<td>'+
 	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
 	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
+	'<span>'+penaltiestypestring+'</span>&nbsp;'+
 	'<span>( ? )</span>'+
 	'</td>';
 
@@ -173,6 +197,7 @@ function addvotetolist(type)
 	+'<td>'+
 	'<img height=20 width=20 src="/images/ok.png" />&nbsp;'+
 	'<span style="color:green;font-weight: bold;">'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
+	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
 	'<span style="color:green;font-weight: bold;">( '+type.points  +' )</span>'+
 	'</td>';
 	
@@ -180,12 +205,14 @@ function addvotetolist(type)
 	+'<td>'+
 	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
 	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
+	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
 	'<span>( '+type.points  +' )</span>'+
 	'</td>';
 	else if (type.points==0) votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/notok.png" />&nbsp;'+
 	'<span style="color:red;font-weight: bold;">'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
+	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
 	'<span style="color:red;font-weight: bold;">( '+type.points +' )</span>'+
 	'</td>';
 	
@@ -195,30 +222,71 @@ function addvotetolist(type)
 //	}
 }
 
-function onclickvote(matchid)
+function onchangevotescores(matchid, penalties)
 {
+	if (penalties== false ) return;
+	var score1 = getValue('score1_'+matchid) ;
+	var score2 = getValue('score2_'+matchid) ;
+
+	if (score1==score2)
+	{
+		setElementVisibility('penaltieswinnerlabel_'+matchid ,true,'display: inline;font-size: 12px;font-weight: normal;');
+		setElementVisibility('penaltieswinner_'+matchid ,true,'display: inline;font-size: 12px;font-weight: normal;');
+		
+		// clear selected
+		var dropDown = document.getElementById('penaltieswinner_'+matchid);
+        dropDown.selectedIndex = 0;
+	}
+	else
+	{
+		setElementVisibility('penaltieswinnerlabel_'+matchid ,false);
+		setElementVisibility('penaltieswinner_'+matchid ,false);
+	}
+	
+//	alert("onchangevotescores matchid " +matchid+" score1 " +score1+" score2 " +score2+" penalties " +penalties);
+
+}
 
 
+function onclickvote(matchid, penalties)
+{
 
 	var type = new Object();
 	type.match_id = matchid;
 	type.match_closed = 'false';
 	type.user = logged_user;
 	type.points = 0;
-	type.score1 = getValue('score1_'+matchid) ;
-	type.score2 = getValue('score2_'+matchid) ;
+	type.score1 = getValue('score1_'+matchid);
+	type.score2 = getValue('score2_'+matchid);
+	type.penalties=false;
+	type.penaltieswinner = getValue('penaltieswinner_'+matchid) ;
+	if (type.penaltieswinner=='' ) {type.penaltieswinner=null;}
 
-
-	var score1=getValue('score1_'+matchid) ;
-	var score2=getValue('score2_'+matchid) ;
-
-//	alert("matchid " +matchid+" score1 " +score1+" score2 " +score2);
+	if (type.score1==type.score2 && penalties ==true && type.penaltieswinner==null)
+	{
+	alert ('Ustaw kto wygra w karnych');
+	return;
+	}
+	
+	if (penalties==true && type.penaltieswinner!=null) type.penalties=true;
+	
+	
+	
+//	alert("matchid " +matchid+" score1 " +type.score1+" score2 " +type.score2+" penalties [" +type.penalties+"]"+" penaltieswinner [" +type.penaltieswinner+"]");
 
 //function processAjaxRequest(divid, file, callbackfunction, matchid,score1, score2,async) 
 
 
+var url ='/api/vote?match_id='+type.match_id+'&score1='+type.score1+'&score2='+type.score2;
 
-	processAjaxRequest('other_devices_table', '/api/vote?match_id='+type.match_id+'&score1='+type.score1+'&score2='+type.score2,processAjaxAddVoteToList,type);
+//if (type.penaltieswinner!=null)url =url +'&penaltieswinner='+type.penaltieswinner;
+if (type.penalties==true)url =url +'&penaltieswinner='+type.penaltieswinner;
+
+//alert('url ='+url);
+//alert('type.penaltieswinner '+type.penaltieswinner);
+//alert('type.penalties '+type.penalties);
+
+	processAjaxRequest('other_devices_table', url,processAjaxAddVoteToList,type);
 
 
 	
@@ -296,7 +364,13 @@ Ranking:    <BR><BR>
 	<td><img th:src="${flags.get(match.team2) != null} ? ${flags.get(match.team2)}" width=42 height=28 /></td>
 	
 	<td th:switch="${match.closed}">
-    <span th:case="true" th:text="${match.score1} +' - '+ ${match.score2}" /> 
+     
+    
+    <th:block th:case="true">
+    	<span th:text="${match.score1} +' - '+ ${match.score2}" />		
+    	<span th:if="${match.penaltieswinner != null}" th:text="'Karne :'+ ${match.penaltieswinner}" >&nbsp;
+    </th:block>		   			
+
     <span th:case="false" th:text="'? - ?'" />
 </td>
 	
@@ -305,7 +379,7 @@ Ranking:    <BR><BR>
 		
 		<input type = hidden name="match_id" th:value="${match.id}">
 
-   		<select name="score1" th:id="'score1_' + ${match.id}">
+   		<select name="score1" th:id="'score1_' + ${match.id}" th:onchange="'onchangevotescores(' + ${match.id} + ','+ ${match.penalties}+');'" >
   		<option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -319,7 +393,7 @@ Ranking:    <BR><BR>
   		<option value="10">10</option>
 		</select> 
 
-   		<select name="score2" th:id="'score2_' + ${match.id}">
+   		<select name="score2" th:id="'score2_' + ${match.id}" th:onchange="'onchangevotescores(' + ${match.id} + ','+ ${match.penalties}+');'">
   		<option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -335,15 +409,16 @@ Ranking:    <BR><BR>
 
 		<th:block th:switch="${match.penalties}">
 			<th:block th:case="true">		   			
-				<label style="font-size: 12px;font-weight: normal;" th:for="'penaltieswinner_' + ${match.id}">Karne wygra:</label>
-   				<select size="2" name="penaltieswinner" th:id="'penaltieswinner_' + ${match.id}">
+				<label style="font-size: 12px;font-weight: normal;" th:for="'penaltieswinnerlabel_' + ${match.id}" th:id="'penaltieswinnerlabel_' + ${match.id}">Karne:</label>
+   				<select name="penaltieswinner" th:id="'penaltieswinner_' + ${match.id}"  style="width: 150px;">
+  				<option value="">?</option>
   				<option th:value="${match.team1}" th:text="${match.team1}" ></option>
   				<option th:value="${match.team2}" th:text="${match.team2}" ></option>
 				</select> 
 			</th:block>
 		</th:block>
 
-<input type="image" name="color"  value="red"  alt="obstaw"  height=20 width=20 th:src="@{/images/add.png}" th:onclick="'onclickvote(' + ${match.id} + '); return false;'" >
+<input type="image" name="color"  value="red"  alt="obstaw"  height=20 width=20 th:src="@{/images/add.png}" th:onclick="'onclickvote(' + ${match.id} + ',  '  + ${match.penalties} +  '    ); return false;'" >
 	<!-- <input type="submit" value="go" th:style="'background:url(' + @{/images/bet.png} + ');'" />
         <input type="submit" value="Obstaw" />
          -->
@@ -374,6 +449,9 @@ Ranking:    <BR><BR>
 	type.points = [[${T(mk.tools.Util).getPoints(match,type)}]];
 	type.score1 = [[${type.score1}]];
 	type.score2 = [[${type.score2}]];
+	type.penalties = [[${match.penalties}]];
+	type.penaltieswinner = [[${type.penaltieswinner}]];
+	//if (type.penaltieswinner==null)type.penaltieswinner='';
 
 //alert("match.score2 "+match.score2);
     

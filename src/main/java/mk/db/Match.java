@@ -70,8 +70,19 @@ public class Match {
 	@Column(name = "penalties")
 	boolean penalties;
 
+	@Column(name = "penaltieswinner")
+	private String penaltieswinner;
 	
+
 	
+	public String getPenaltieswinner() {
+		return penaltieswinner;
+	}
+
+	public void setPenaltieswinner(String penaltieswinner) {
+		this.penaltieswinner = penaltieswinner;
+	}
+
 	public boolean isPenalties() {
 		return penalties;
 	}

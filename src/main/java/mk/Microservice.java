@@ -66,6 +66,8 @@ public class Microservice {
     		@RequestParam(value="match_id") int match_id,
     		@RequestParam(value="score1") byte score1,
     		@RequestParam(value="score2") byte score2,
+    		@RequestParam(value="penaltieswinner", required = false) String penaltieswinner,
+    		
     		
     		Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -83,15 +85,19 @@ public class Microservice {
     	Type type = new Type();
     	type.setScore1(score1);
     	type.setScore2(score2);
+    	type.setPenaltieswinner(penaltieswinner);
     	type.setUser(user);
 
     	System.out.println("match_id "+match_id);
     	System.out.println("type score1 "+type.getScore1());
     	System.out.println("type score2 "+type.getScore2());
+    	System.out.println("type penaltieswinner "+type.getPenaltieswinner());
+    	
+    	if (type.getPenaltieswinner() == null)   	System.out.println("type penaltieswinner is NULL");
     	
     	match.getTypes().add(type);
     	
-    	//matchRepository.save(match);
+    	matchRepository.save(match);
     	    	
     	System.out.println("type saved");
     	

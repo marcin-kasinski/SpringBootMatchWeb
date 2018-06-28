@@ -89,6 +89,9 @@ public class Util {
 		
 		if (score1==score1_bid && score2==score2_bid) ret=3;
 		
+		
+		if (match.isPenalties() && match.getPenaltieswinner()!=null && match.getPenaltieswinner()== type.getPenaltieswinner()) ret++;
+		
 		return ret;
 	}
 	
