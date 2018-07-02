@@ -166,28 +166,34 @@ else
 
 function addvotetolist(type)
 {	
-//	if (type.match_id==54)
-//{
-//		if(	type.penaltieswinner=='' ) alert('String ');
-//		if(	type.penaltieswinner==null ) alert("null" );
-//	alert('advotetolist 1 matchid ' +type.match_id+' user '+ type.user+' point '+ type.point+' penaltieswinner ['+ type.penaltieswinner+'] / match_closed '+ type.match_closed);
-//	}
-	
-//	alert("addvotetolist");
+
+//	alert('addvotetolist 1');
+
+/*	
+	if (type.match_id==56)
+	{
+//		alert('advotetolist 1 matchid ' +type.match_id );
+		alert('advotetolist 1 matchid ' +type.match_id+' user '+ type.user+' point '+ type.points+' penaltieswinner ['+ type.penaltieswinner+'] / match_closed '+ type.match_closed+' / score1 '+ type.score1);
+	}
+//	alert('addvotetolist 2');
+*/
 
 	var penaltiestypestring ='';
 	if (type.penaltieswinner!=null)penaltiestypestring ='Karne :'+type.penaltieswinner;
 
 	var votestable=document.getElementById('types_for_match_' +type.match_id);
 
-//	if (matchid==48)
-//	{
-//	alert('advotetolist 2 matchid ' +matchid+' user '+ user+' point '+ point+' / match_closed '+ match_closed);
-//	}
-
 	var content=votestable.innerHTML;
 
-	if (type.match_closed=='false') votestable.innerHTML=content
+	if (type.score1==-1) votestable.innerHTML=content
+	+'<td>'+
+	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
+	'<span>'+type.user+' : ? - ?</span>&nbsp;'+
+	'<span>'+penaltiestypestring+'</span>&nbsp;'+
+	'<span>( ? )</span>'+
+	'</td>';
+
+	else if (type.match_closed=='false') votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
 	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
@@ -217,11 +223,15 @@ function addvotetolist(type)
 	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
 	'<span style="color:red;font-weight: bold;">( '+type.points +' )</span>'+
 	'</td>';
-	
+
+
 //	if (matchid==48)
 //	{
 //	alert('advotetolist 3 matchid ' +matchid+' user '+ user+' point '+ point+' / match_closed '+ match_closed);
 //	}
+
+
+
 }
 
 function onchangevotescores(matchid, penalties)
@@ -444,27 +454,27 @@ Ranking:    <BR><BR>
      <script th:inline="javascript">
 /*<![CDATA[*/
 
+//	alert('A1');
 	var type = new Object();
 	type.match_id = [[${match.id}]];
+//	alert('A2 '+type.match_id );
 	type.match_closed = '[[${match.closed}]]';
 	type.user = [[${type.user.name}]];
-	type.points = [[${T(mk.tools.Util).getPoints(match,type)}]];
-	type.score1 = [[${type.score1}]];
-	type.score2 = [[${type.score2}]];
+	type.points = [[${T(mk.tools.Util).getPoints(match,type,user.getEmail())}]];
+	type.score1 = [[${T(mk.tools.Util).getScoreToSee(match,type,user.getEmail(),1)}]];
+//	alert('A3 '+type.match_id );
+	type.score2 = [[${T(mk.tools.Util).getScoreToSee(match,type,user.getEmail(),2)}]];
+//	alert('A4 '+type.match_id );
+
 	type.penalties = [[${match.penalties}]];
-	type.penaltieswinner = [[${type.penaltieswinner}]];
+//	alert('A5 '+type.match_id );
+
+	type.penaltieswinner = [[${T(mk.tools.Util).getPenaltieswinnerToSee(match,type,user.getEmail())}]];
+//	alert('A6 '+type.match_id );
 	//if (type.penaltieswinner==null)type.penaltieswinner='';
-
-//alert("match.score2 "+match.score2);
-    
-    var match_id = [[${match.id}]];
-    var match_closed = '[[${match.closed}]]';
-    var user = [[${type.user.name}]];
-    var points = [[${T(mk.tools.Util).getPoints(match,type)}]];
-    var score1 = [[${type.score1}]];
-    var score2 = [[${type.score2}]];
-
+//	if (type.match_id==56) alert ('IN '+type.match_id+' score1 ='+type.score1);
     addvotetolist(type);
+//	if (type.match_id==56) alert ('out '+type.match_id+' score1 ='+type.score1);
     
     
 //    alert (email+ ' / '+points);
@@ -477,77 +487,7 @@ Ranking:    <BR><BR>
 </script>
 
       </th:block>
-      
-            
-         <!------------------------------------------ -->
-      <!-- 
-      
-     <td th:each="type : ${match.types}"> 
-    
-
-
-      <th:block th:switch="${T(mk.tools.Util).getPoints(match,type)}">
-         <th:block th:case="'3'">
-           <img height=20 width=20 th:src="@{/images/ok.png}" />
-           <span style="color:green;font-weight: bold;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-           <span style="color:green;font-weight: bold;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
-         </th:block> 
-         <th:block th:case="'0'">
-         
-
-           <th:block th:switch="${match.closed}">
-             <th:block th:case="true">
-               <img height=20 width=20 th:src="@{/images/notok.png}" />
-               <span style="color:red;" th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-               <span style="color:red;" th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
-             </th:block> 
-             <th:block th:case="false">
-               <img height=20 width=20 th:src="@{/images/none.png}" />
-               <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-               <span th:text="'( ? )'" />
-             </th:block> 
-           </th:block> 
-
-
-
-         </th:block> 
-
-
-
-
-
-
-         <th:block th:case="'1'">
-           <img height=20 width=20 th:src="@{/images/none.png}" />
-           <span th:text="${type.user.name} +' '+${type.user.lastName.substring(0,1)}+ ' : ' + ${type.score1} + ' - ' + ${type.score2}  " />
-           <span th:text="'( '+${T(mk.tools.Util).getPoints(match,type)}+' )'" />
-         </th:block> 
-      </th:block>   
-      <td>
-      </tr>
-    </table>
-    </td>
-     -->
-   <!------------------------------------------ -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
     
 </tr>
 

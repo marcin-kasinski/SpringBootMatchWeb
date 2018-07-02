@@ -211,7 +211,7 @@ public String editmatch(@ModelAttribute Match match,Model model) {
 
         		
         		
-        		byte point= Util.getPoints(match,type);
+        		byte point= Util.getPoints(match,type, user.getEmail());
         		
         		actualpoints= (byte) (actualpoints+point);
         		

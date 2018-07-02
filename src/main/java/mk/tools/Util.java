@@ -65,9 +65,41 @@ public class Util {
 		
 	}
 	
-	public static byte getPoints(Match match, Type type) {
+	
+	public static byte getScoreToSee(Match match, Type type, String logged_user, byte witch_score) {
+		
+		byte ret=-1;
+		
+		if (Util.isCurrentDateTimeEalier(match) && logged_user!=type.getUser().getEmail()) return ret;
+		
+		if (witch_score==1) ret = type.getScore1();
+		else if (witch_score==2) ret = type.getScore2();
+		
+		return ret;
+
+	}
+	
+	public static String getPenaltieswinnerToSee(Match match, Type type, String logged_user) {
+		
+		String ret=null;
+		
+		if (Util.isCurrentDateTimeEalier(match) && logged_user!=type.getUser().getEmail()) return ret;
+		
+		else ret = type.getPenaltieswinner();
+		
+		return ret;
+		
+	}
+	
+	public static byte getPoints(Match match, Type type, String logged_user) {
 		byte ret=0;
 
+		
+//		if (Util.isCurrentDateTimeEalier(match) && logged_user!=type.getUser().getEmail())
+		
+//		System.out.println("getPoints logged_user "+logged_user);
+
+		
 		if (!match.isClosed()) return 0;
 
 		byte score1= match.getScore1();
