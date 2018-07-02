@@ -17,6 +17,8 @@
 
 #records {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: normal; 
     border-collapse: collapse;
     #width: 100%;
 }
@@ -368,7 +370,7 @@ Ranking:    <BR><BR>
     
     <th:block th:case="true">
     	<span th:text="${match.score1} +' - '+ ${match.score2}" />		
-    	<span th:if="${match.penaltieswinner != null}" th:text="'Karne :'+ ${match.penaltieswinner}" >&nbsp;
+    	<span th:if="${match.penaltieswinner != null}" th:text="'( Karne :'+ ${match.penaltieswinner}+' )'" >&nbsp;
     </th:block>		   			
 
     <span th:case="false" th:text="'? - ?'" />
@@ -410,7 +412,7 @@ Ranking:    <BR><BR>
 		<th:block th:switch="${match.penalties}">
 			<th:block th:case="true">		   			
 				<label style="font-size: 12px;font-weight: normal;" th:for="'penaltieswinnerlabel_' + ${match.id}" th:id="'penaltieswinnerlabel_' + ${match.id}">Karne:</label>
-   				<select name="penaltieswinner" th:id="'penaltieswinner_' + ${match.id}"  style="width: 150px;">
+   				<select name="penaltieswinner" th:id="'penaltieswinner_' + ${match.id}"  style="width: 100px;">
   				<option value="">?</option>
   				<option th:value="${match.team1}" th:text="${match.team1}" ></option>
   				<option th:value="${match.team2}" th:text="${match.team2}" ></option>

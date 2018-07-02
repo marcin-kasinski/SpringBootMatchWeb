@@ -180,6 +180,7 @@ public String editmatch(@ModelAttribute Match match,Model model) {
 
     	
     	List<Match> matches= matchRepository.findByGameOrderByIdDesc(game);
+//    	List<Match> matches= matchRepository.findByGameOrderByPlay__Time(game);
 
 		System.out.println("AFTER List<Match> matches");
 

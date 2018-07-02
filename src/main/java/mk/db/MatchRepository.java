@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface MatchRepository extends JpaRepository<Match, Integer> {
 
 	List<Match> findByGameOrderByIdDesc(int game_id);
+//	List<Match> findByGameOrderByPlay__Time(int game_id);
 	Match findById(int id);
 }
