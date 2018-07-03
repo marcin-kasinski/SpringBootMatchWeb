@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.thymeleaf.util.StringUtils;
 
+import mk.MatchStats;
 import mk.db.Match;
 import mk.db.Role;
 import mk.db.Type;
@@ -91,7 +92,7 @@ public class Util {
 		
 	}
 	
-	public static byte getPoints(Match match, Type type, String logged_user) {
+	public static byte getPoints(Match match, Type type) {
 		byte ret=0;
 
 		
@@ -126,6 +127,72 @@ public class Util {
 		
 		return ret;
 	}
+
+	
+	
+	public static int getStatsIndex(List stats, String key)
+	{
+
+		for (int i = 0; i < stats.size(); i++) {
+
+			MatchStats matchStats = (MatchStats) stats.get(i);
+				if (matchStats.getKey().equals(key)) return i;
+			
+			
+		}//for 
+		return -1;
+
+	}
+
+	
+	public static MatchStats getCurrenStats(List stats, String key)
+	{
+
+		
+		for (int i = 0; i < stats.size(); i++) {
+
+			MatchStats matchStats = (MatchStats) stats.get(i);
+				if (matchStats.getKey().equals(key)) return matchStats;
+			
+			
+		}//for 
+		
+		
+		return null;
+	}
+
+	public static void processStats(List stats, Match match, Type type, User user)
+	{
+
+		String key=type.getUser().getLastName()+" "+type.getUser().getName();
+		
+		MatchStats matchStats=getCurrenStats(stats, key);
+		
+		if (matchStats==null)matchStats = new MatchStats(key,type.getUser().getEmail(), 0, 0, 0, 0,0);
+				
+		byte point= Util.getPoints(match,type);
+				
+		matchStats.setPoints(matchStats.getPoints()+point);
+		
+		if (point==3 && match.getPenaltieswinner()==null)matchStats.setPerfectscoredcount(matchStats.getPerfectscoredcount()+1);
+		if (point==4 )matchStats.setPerfectscoredcount(matchStats.getPerfectscoredcount()+1);
+		if (point==1 )matchStats.setScoredcount(matchStats.getScoredcount()+1);
+		if (point==0 )
+			{
+			matchStats.setNoscoredcount(matchStats.getNoscoredcount()+1);
+			matchStats.setPointsWithMinuses(matchStats.getPointsWithMinuses()-1);			
+			}
+
+		matchStats.setPointsWithMinuses(matchStats.getPointsWithMinuses()+point);
+
+		int index= Util.getStatsIndex(stats, key);
+
+		if (index==-1) stats.add(matchStats);
+		else stats.set(index, matchStats);
+		
+//		stats.put(type.getUser().getLastName()+" "+type.getUser().getName(), actualpoints);
+		
+	}
 	
 	public static boolean isCurrentDateTimeEalier(Match match) {
 
@@ -141,16 +208,20 @@ public class Util {
 
 	}
 	
-	
+	/*
 	public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
 	    List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
 	    Collections.sort(list, new Comparator<Object>() {
 	        @SuppressWarnings("unchecked")
 	        public int compare(Object o1, Object o2) {
 	        	
-	        	int ret=((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
-	        	ret = ret - 2*ret;
-	            return ret;
+	        	
+        		MatchStats ms1 = (MatchStats) o1;
+        		MatchStats ms2 = (MatchStats) o2;
+	        	return ms1>ms2;
+//	        	int ret=((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
+//	        	ret = ret - 2*ret;
+//	            return ret;
 	        }
 	    });
 
@@ -163,5 +234,5 @@ public class Util {
 	    return result;
 	}
 	
-
+*/
 }

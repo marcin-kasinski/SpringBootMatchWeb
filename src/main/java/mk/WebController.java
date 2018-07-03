@@ -157,7 +157,11 @@ public String editmatch(@ModelAttribute Match match,Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	User user = userService.findUserByEmail(auth.getName());
     	
-    	Map points = new HashMap<String, Byte>();
+//    	Map statsPoints = new HashMap<String, int>();
+
+    	List<MatchStats> stats= new ArrayList<MatchStats>();
+
+    	
     	
     	List<Flag> flags = new ArrayList<Flag>();
     	
@@ -196,28 +200,11 @@ public String editmatch(@ModelAttribute Match match,Model model) {
     		
         	for (Iterator<Type> itertype = match.getTypes().iterator(); itertype.hasNext(); ) {
         		Type type = itertype.next();
+        		        		
+        			
+        		Util.processStats(stats, match, type, user);
         		
-        		
-//        		System.out.println(type.getUser().getLastName()+" "+type.getUser().getName());
-        		
-        		
-        		byte actualpoints=0;
-        		
-        		if (points.get(type.getUser().getLastName()+" "+type.getUser().getName())!=null )
-        			actualpoints= (byte) points.get(type.getUser().getLastName()+" "+type.getUser().getName());
-        		
-        		
-
-
-        		
-        		
-        		byte point= Util.getPoints(match,type, user.getEmail());
-        		
-        		actualpoints= (byte) (actualpoints+point);
-        		
-        		points.put(type.getUser().getLastName()+" "+type.getUser().getName(), actualpoints);
-        		
-        	}
+        	}//Map stats
     		
     		//process types
     		
@@ -232,22 +219,8 @@ public String editmatch(@ModelAttribute Match match,Model model) {
         
 
 
-    	/* Display content using Iterator*/
-        Set set = points.entrySet();
 
-		
-		
-        Iterator iterator = set.iterator();
-        while(iterator.hasNext()) {
-           Map.Entry mentry = (Map.Entry)iterator.next();
-           System.out.print("key is: "+ mentry.getKey() + " & Value is: ");
-           System.out.println(mentry.getValue());
-        }
-    	
-    	
-
-	
-        Map<String,Byte> sortedpoints =Util.sortByValue(points);
+//        Map<String,Byte> sortedpoints =Util.sortByValue(stats);
 
 
     	//iterate flags:
@@ -263,9 +236,21 @@ public String editmatch(@ModelAttribute Match match,Model model) {
         
         System.out.println("ITERATE FLAGS END");
         
+     // Sorting
+        Collections.sort(stats, new Comparator<MatchStats>() {
+                @Override
+                public int compare(MatchStats stats1, MatchStats stats2)
+                {
+
+                    return  stats2.getPoints()-stats1.getPoints();
+                }
+            });
+        
+        
+        
        	model.addAttribute("flags",flagsMap);
        	model.addAttribute("matches",matches);
-       	model.addAttribute("points",sortedpoints);
+       	model.addAttribute("stats",stats);
        	model.addAttribute("user",user);
 
     	return "matches";

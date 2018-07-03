@@ -188,49 +188,41 @@ function addvotetolist(type)
 	if (type.score1==-1) votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
-	'<span>'+type.user+' : ? - ?</span>&nbsp;'+
-	'<span>'+penaltiestypestring+'</span>&nbsp;'+
+	'<span>'+type.user+' : ? - ?&nbsp;'+
+	penaltiestypestring+'</span>&nbsp;'+
 	'<span>( ? )</span>'+
 	'</td>';
 
 	else if (type.match_closed=='false') votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
-	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
-	'<span>'+penaltiestypestring+'</span>&nbsp;'+
+	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'&nbsp;'+
+	penaltiestypestring+'</span>&nbsp;'+
 	'<span>( ? )</span>'+
 	'</td>';
 
 	else if (type.points==3) votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/ok.png" />&nbsp;'+
-	'<span style="color:green;font-weight: bold;">'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
-	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
+	'<span style="color:green;font-weight: bold;">'+type.user+' : '+ type.score1+' - '+type.score2   +'&nbsp;'+
+	penaltiestypestring+'</span>&nbsp;'+	
 	'<span style="color:green;font-weight: bold;">( '+type.points  +' )</span>'+
 	'</td>';
 	
 	else if (type.points==1) votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/none.png" />&nbsp;'+
-	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
-	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
+	'<span>'+type.user+' : '+ type.score1+' - '+type.score2   +'&nbsp;'+
+	penaltiestypestring+'</span>&nbsp;'+	
 	'<span>( '+type.points  +' )</span>'+
 	'</td>';
 	else if (type.points==0) votestable.innerHTML=content
 	+'<td>'+
 	'<img height=20 width=20 src="/images/notok.png" />&nbsp;'+
-	'<span style="color:red;font-weight: bold;">'+type.user+' : '+ type.score1+' - '+type.score2   +'</span>&nbsp;'+
-	'<span>'+penaltiestypestring+'</span>&nbsp;'+	
+	'<span style="color:red;font-weight: bold;">'+type.user+' : '+ type.score1+' - '+type.score2   +'&nbsp;'+
+	penaltiestypestring+'</span>&nbsp;'+	
 	'<span style="color:red;font-weight: bold;">( '+type.points +' )</span>'+
 	'</td>';
-
-
-//	if (matchid==48)
-//	{
-//	alert('advotetolist 3 matchid ' +matchid+' user '+ user+' point '+ point+' / match_closed '+ match_closed);
-//	}
-
-
 
 }
 
@@ -337,10 +329,17 @@ function addpoints(key, value)
 Ranking:    <BR><BR>    
     
 <table id="records">
-<tr th:each="point : ${points}">
-	<td th:text="${point.key}">keyvalue</td>
-    <td th:text="${point.value}">num</td>
-    <td>&nbsp;</td>
+<tr><th>Kto</th><th >Punkty</th><th >Punkty jeśli byłyby ujemne</th><th>Wynik dokładny</th><th>Wynik trafiony</th><th>Wynik nie trafiony</th></tr>
+<tr th:each="stat : ${stats}">
+
+    <td th:text="${stat.key}">num</td>
+    <td th:text="${stat.points}">num</td>
+    <td th:text="${stat.pointsWithMinuses}">num</td>
+    <td th:text="${stat.perfectscoredcount}">num</td>
+    <td th:text="${stat.scoredcount}">num</td>
+    <td th:text="${stat.noscoredcount}">num</td>
+    
+    
 
 </tr>    
 </table>
@@ -460,7 +459,7 @@ Ranking:    <BR><BR>
 //	alert('A2 '+type.match_id );
 	type.match_closed = '[[${match.closed}]]';
 	type.user = [[${type.user.name}]];
-	type.points = [[${T(mk.tools.Util).getPoints(match,type,user.getEmail())}]];
+	type.points = [[${T(mk.tools.Util).getPoints(match,type)}]];
 	type.score1 = [[${T(mk.tools.Util).getScoreToSee(match,type,user.getEmail(),1)}]];
 //	alert('A3 '+type.match_id );
 	type.score2 = [[${T(mk.tools.Util).getScoreToSee(match,type,user.getEmail(),2)}]];
