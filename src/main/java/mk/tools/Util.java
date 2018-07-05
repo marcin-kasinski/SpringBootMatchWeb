@@ -161,14 +161,43 @@ public class Util {
 		return null;
 	}
 
-	public static void processStats(List stats, Match match, Type type, User user)
+	
+	public static void processExtraStats(Map scoredDayHash, Match match, Type type)
+	{
+		
+		String key=match.getPlay_time().toString().substring(0, 10)+"_"+type.getUser().getEmail();
+		
+		System.out.println("processExtraStats key "+key);
+		
+		Byte minpointsinday=(Byte) scoredDayHash.get(key);
+		
+		// jelsi juz wiemy, ze by³o s³abo
+		if (minpointsinday!=null && minpointsinday.byteValue()==0) return;
+
+		
+		byte point= Util.getPoints(match,type);
+
+		
+		if (minpointsinday==null ) scoredDayHash.put(key, new Byte(point));
+
+		if (minpointsinday!=null && point <minpointsinday.byteValue()) scoredDayHash.put(key, point);
+		
+		
+		
+		
+		
+		
+	}	
+
+	public static void processStats(List stats, Match match, Type type)
 	{
 
-		String key=type.getUser().getLastName()+" "+type.getUser().getName();
-		
+//		String key=type.getUser().getLastName()+" "+type.getUser().getName();
+		String key=type.getUser().getEmail();
+			
 		MatchStats matchStats=getCurrenStats(stats, key);
 		
-		if (matchStats==null)matchStats = new MatchStats(key,type.getUser().getEmail(), 0, 0, 0, 0,0);
+		if (matchStats==null)matchStats = new MatchStats(key,type.getUser().getEmail(),type.getUser().getName() ,type.getUser().getLastName(), 0, 0, 0, 0,0);
 				
 		byte point= Util.getPoints(match,type);
 				
@@ -208,20 +237,16 @@ public class Util {
 
 	}
 	
-	/*
+
 	public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
 	    List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
 	    Collections.sort(list, new Comparator<Object>() {
 	        @SuppressWarnings("unchecked")
 	        public int compare(Object o1, Object o2) {
-	        	
-	        	
-        		MatchStats ms1 = (MatchStats) o1;
-        		MatchStats ms2 = (MatchStats) o2;
-	        	return ms1>ms2;
-//	        	int ret=((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
-//	        	ret = ret - 2*ret;
-//	            return ret;
+
+	        	int ret=((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
+	        	ret = ret - 2*ret;
+	            return ret;
 	        }
 	    });
 
@@ -234,5 +259,4 @@ public class Util {
 	    return result;
 	}
 	
-*/
 }

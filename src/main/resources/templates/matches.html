@@ -329,17 +329,17 @@ function addpoints(key, value)
 Ranking:    <BR><BR>    
     
 <table id="records">
-<tr><th>Kto</th><th >Punkty</th><th >Punkty jeśli byłyby ujemne</th><th>Wynik dokładny</th><th>Wynik trafiony</th><th>Wynik nie trafiony</th></tr>
+<tr><th>Kto</th><!-- <th>Punkty razem</th> --><th>Punkty</th><th>Punkty jeśli byłyby ujemne</th><!-- <th>Punkty dodatkowe</th> --><th>Wynik dokładny</th><th>Wynik trafiony</th><th>Wynik nietrafiony</th></tr>
 <tr th:each="stat : ${stats}">
 
-    <td th:text="${stat.key}">num</td>
+    <td th:text="${stat.lastName} +' '+ ${stat.name}">num</td>
+<!--     <td style="color:green;font-weight: bold;" th:text="${stat.points}+${extraPoints.get(stat.email)}">num</td> -->
     <td th:text="${stat.points}">num</td>
     <td th:text="${stat.pointsWithMinuses}">num</td>
+<!--     <td th:text="${extraPoints.get(stat.email)}">num</td> -->
     <td th:text="${stat.perfectscoredcount}">num</td>
     <td th:text="${stat.scoredcount}">num</td>
     <td th:text="${stat.noscoredcount}">num</td>
-    
-    
 
 </tr>    
 </table>

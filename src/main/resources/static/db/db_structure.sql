@@ -207,6 +207,12 @@ INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-03 16:00:00', 'Szwecja', 'Szwajcaria', NULL,NULL,1, 0);
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-03 20:00:00', 'Kolumbia', 'Anglia', NULL,NULL,1, 0);
 
+-- Mecze 1/4 fina³u
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-06 16:00:00', 'Urugwaj', 'Francja', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-06 20:00:00', 'Brazylia', 'Belgia', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-07 16:00:00', 'Szwecja', 'Anglia', NULL,NULL,1, 0);
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-07 20:00:00', 'Rosja', 'Chorwacja', NULL,NULL,1, 0);
+
 
 CREATE TABLE `type` (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,

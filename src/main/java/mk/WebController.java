@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -189,7 +190,9 @@ public String editmatch(@ModelAttribute Match match,Model model) {
 		System.out.println("AFTER List<Match> matches");
 
     	System.out.println("Types");
-    	
+
+    	Map<String, Byte> scoredDayHash = new HashMap<String, Byte>();
+
     	for (Iterator<Match> iter = matches.iterator(); iter.hasNext(); ) {
     		Match match = iter.next();
     		//System.out.println("mecz "+match.getCountry1()+" - "+match.getCountry2());
@@ -198,11 +201,15 @@ public String editmatch(@ModelAttribute Match match,Model model) {
     		
     		//process types
     		
+    	    		
+
+    		
         	for (Iterator<Type> itertype = match.getTypes().iterator(); itertype.hasNext(); ) {
         		Type type = itertype.next();
         		        		
-        			
-        		Util.processStats(stats, match, type, user);
+      
+        		Util.processStats(stats, match, type);
+        		Util.processExtraStats(scoredDayHash , match, type);
         		
         	}//Map stats
     		
@@ -225,7 +232,7 @@ public String editmatch(@ModelAttribute Match match,Model model) {
 
     	//iterate flags:
 
-
+        
         System.out.println("ITERATE FLAGS START "+flags.size());
 
 
@@ -235,6 +242,33 @@ public String editmatch(@ModelAttribute Match match,Model model) {
         }
         
         System.out.println("ITERATE FLAGS END");
+        
+
+
+        Map<String, Byte> sortedpoints = new TreeMap<>(scoredDayHash);
+
+    	Map<String, Integer> extraPoints = new HashMap<String, Integer>();
+
+        
+        
+        System.out.println("ITERATE extrapoints");
+        
+        for (Entry<String,Byte> pair : sortedpoints.entrySet()){
+        	
+        	String key=pair.getKey().substring(11);
+        	
+        	Integer extraPoint= extraPoints.get(key);
+
+        	if (extraPoint==null)extraPoint= new Integer(0);
+//        	else extraPoint.se
+        		
+            //iterate over the pairs
+            if (pair.getValue().byteValue()>0 ) extraPoints.put(key, new Integer(extraPoint.intValue()+1));   //System.out.println("key="+key+" -----"+ pair.getKey()+" "+pair.getValue());
+        }
+        
+        System.out.println("ITERATE extrapoints");
+        
+        
         
      // Sorting
         Collections.sort(stats, new Comparator<MatchStats>() {
@@ -247,8 +281,8 @@ public String editmatch(@ModelAttribute Match match,Model model) {
             });
         
         
-        
        	model.addAttribute("flags",flagsMap);
+       	model.addAttribute("extraPoints",extraPoints);
        	model.addAttribute("matches",matches);
        	model.addAttribute("stats",stats);
        	model.addAttribute("user",user);
