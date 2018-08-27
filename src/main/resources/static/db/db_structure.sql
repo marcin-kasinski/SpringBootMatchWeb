@@ -218,6 +218,12 @@ INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-10 20:00:00', 'Francja', 'Belgia', NULL,NULL,1, 0);
 INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-11 20:00:00', 'Chorwacja', 'Anglia', NULL,NULL,1, 0);
 
+-- Mecze o 3 miejsce
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-14 16:00:00', 'Belgia', 'Anglia', NULL,NULL,1, 0);
+
+-- Fina³
+INSERT INTO `match` (`game_id`,`play_time`, `team1`, `team2`, `score1`, `score2`,`penalties`, `closed`) VALUES (1,  '2018-07-15 17:00:00', 'Francja', 'Chorwacja', NULL,NULL,1, 0);
+
 
 CREATE TABLE `type` (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,

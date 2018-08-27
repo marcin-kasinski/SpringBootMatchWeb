@@ -167,7 +167,7 @@ public class Util {
 		
 		String key=match.getPlay_time().toString().substring(0, 10)+"_"+type.getUser().getEmail();
 		
-		System.out.println("processExtraStats key "+key);
+//		System.out.println("processExtraStats key "+key);
 		
 		Byte minpointsinday=(Byte) scoredDayHash.get(key);
 		
